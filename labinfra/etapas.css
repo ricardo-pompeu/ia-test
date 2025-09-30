@@ -1,0 +1,93 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navegação */
+.navigator {
+  display: flex;
+  align-items: center;
+  background-color: #004d99;
+  color: #fff;
+  padding: 10px 20px;
+  list-style: none;
+}
+
+.navigator li {
+  margin-right: 20px;
+}
+
+.navigator a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Seção principal */
+.inicio {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.inicio h4 {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.card-box {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  resize: vertical;
+}
+
+/* Botão */
+.gridbutton {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.button-ia {
+  background-color: #004d99;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.button-ia:hover {
+  background-color: #003366;
+}
+
+/* Resposta da IA */
+.resposta-ia {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 100px;
+  overflow-y: auto;
+  font-size: 14px;
+}
