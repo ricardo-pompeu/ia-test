@@ -2,7 +2,6 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
-  // Só aceita requisições POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método não permitido' });
   }
@@ -10,14 +9,14 @@ export default async function handler(req, res) {
   try {
     const { prompt } = req.body;
 
-    // Validação simples do prompt
+    // Verifica se o prompt existe
     if (!prompt || prompt.trim().length === 0) {
-      return res.status(400).json({ error: 'Prompt vazio' });
+      return res.status(400).json({ output: 'Prompt vazio. Por favor, insira uma descrição do mineral.' });
     }
 
     const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: 'Chave da API não configurada' });
+      return res.status(500).json({ output: 'Chave da API não configurada no Vercel.' });
     }
 
     // Chamada para a API do Gemini 2.5 Flash
@@ -28,23 +27,30 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'gemini-2.5-flash',   // Modelo 2.5 Flash
+        model: 'gemini-2.5-flash',
         prompt: { text: prompt },
         temperature: 0.7
       })
     });
 
-    // Certifica que a resposta é JSON
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json(); // tenta extrair JSON
+    } catch (parseErr) {
+      console.error("Falha ao fazer parse do JSON da Gemini:", parseErr);
+      // Retorna mensagem de erro como JSON
+      return res.status(200).json({ output: 'Erro ao processar resposta da IA (JSON inválido).' });
+    }
 
     // Extrai o texto da resposta
-    const output = data.output?.[0]?.content?.[0]?.text || "Sem resposta";
+    const output = data.output?.[0]?.content?.[0]?.text || "Sem resposta da IA.";
 
-    // Retorna JSON sempre
+    // Retorna sempre JSON
     res.status(200).json({ output });
 
   } catch (err) {
-    console.error('Erro na API Gemini:', err);
-    res.status(500).json({ error: err.message || 'Erro desconhecido' });
+    console.error("Erro na API /api/gemini:", err);
+    // Retorna sempre JSON, mesmo em erro interno
+    res.status(500).json({ output: `Erro interno: ${err.message || 'desconhecido'}` });
   }
 }
