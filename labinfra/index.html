@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LabInfra - UFPA</title>
 
-  <!-- Estilos -->
   <link rel="stylesheet" href="/etapas.css">
-
-  <!-- Favicons -->
   <link rel="icon" href="/Src/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="/Src/favicon.ico" type="image/x-icon">
 
@@ -19,12 +16,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-  <!-- Biblioteca para Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
-  <!-- Navegação -->
   <ul class="navigator">
     <li class="nav1">
       <a id="openSidebar" href="/Inicial/index.html"><i data-lucide="chevron-left"></i></a>
@@ -32,7 +27,6 @@
     <li class="nav2">Inteligência artificial</li>
   </ul>
 
-  <!-- Seção principal -->
   <section class="inicio">
     <h4>Descreva o mineral</h4>
     <textarea id="descricao" class="card-box" placeholder="Ex: Mineral de cor esverdeada, brilho vítreo, dureza alta..."></textarea>
@@ -46,11 +40,9 @@
     </div>
   </section>
 
-  <!-- Ícones Lucide -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script> lucide.createIcons(); </script>
 
-  <!-- Script principal -->
   <script>
     const respostaDiv = document.getElementById("resposta");
     const descricaoEl = document.getElementById("descricao");
@@ -73,11 +65,8 @@
           body: JSON.stringify({ prompt })
         });
 
-        // Transforma a resposta em JSON
         const data = await resp.json();
-
-        // Mostra a resposta usando Markdown
-        respostaDiv.innerHTML = data.output ? marked.parse(data.output) : "Nenhuma resposta recebida.";
+        respostaDiv.innerHTML = marked.parse(data.output);
       } catch (err) {
         console.error(err);
         respostaDiv.innerText = "Erro ao gerar resposta: " + err.message;
