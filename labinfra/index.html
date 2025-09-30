@@ -73,11 +73,11 @@
           body: JSON.stringify({ prompt })
         });
 
+        // Transforma a resposta em JSON
         const data = await resp.json();
-        if (!resp.ok) throw new Error(data?.error || "Falha na API");
 
-        const text = (data?.output || "").trim();
-        respostaDiv.innerHTML = text ? marked.parse(text) : "Nenhuma resposta recebida.";
+        // Mostra a resposta usando Markdown
+        respostaDiv.innerHTML = data.output ? marked.parse(data.output) : "Nenhuma resposta recebida.";
       } catch (err) {
         console.error(err);
         respostaDiv.innerText = "Erro ao gerar resposta: " + err.message;
